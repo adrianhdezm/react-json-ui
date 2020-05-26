@@ -3,8 +3,9 @@ import { useField } from 'formik';
 import Box from '@material-ui/core/Box';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import { UIElementProps } from '../../types';
 
-export interface UIBooleanFieldProps {
+export interface UIBooleanFieldProps extends UIElementProps {
   name: string;
   disabled: boolean;
   label?: string;
@@ -15,16 +16,18 @@ export interface UIBooleanFieldProps {
 
 export function UIBooleanField({ name, disabled, ...props }: UIBooleanFieldProps): JSX.Element {
   const [field] = useField<boolean>(name);
-
   const { value, onChange, onBlur } = field;
 
-  const label = props.label || '';
-  const size = props.size || 'small';
-  const labelPlacement = props.labelPlacement || 'end';
-  const color = props.color || 'primary';
+  const {
+    label = '',
+    size = 'small',
+    labelPlacement = 'end',
+    color = 'primary',
+    ...boxProps
+  } = props;
 
   return (
-    <Box pb={1} pr={2} pl={2}>
+    <Box pb={1} pr={2} pl={2} {...boxProps}>
       <FormControlLabel
         disabled={disabled}
         label={label}

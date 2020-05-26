@@ -6,9 +6,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { FieldOption } from '../../types';
+import { FieldOption, UIElementProps } from '../../types';
 
-export interface UIRadioGroupFieldProps {
+export interface UIRadioGroupFieldProps extends UIElementProps {
   name: string;
   disabled: boolean;
   options: FieldOption[];
@@ -28,14 +28,17 @@ export function UIRadioGroupField({
   const [field] = useField<string>(name);
   const { value, onChange, onBlur } = field;
 
-  const label = props.label || '';
-  const size = props.size || 'small';
-  const labelPlacement = props.labelPlacement || 'end';
-  const color = props.color || 'primary';
-  const row = props.row || true;
+  const {
+    label = '',
+    size = 'small',
+    labelPlacement = 'end',
+    color = 'primary',
+    row = true,
+    ...boxProps
+  } = props;
 
   return (
-    <Box p={1}>
+    <Box p={1} {...boxProps}>
       <FormControl component="fieldset" disabled={disabled}>
         <FormLabel component="legend">{label}</FormLabel>
         <RadioGroup name={name} value={value} row={row} onChange={onChange} onBlur={onBlur}>

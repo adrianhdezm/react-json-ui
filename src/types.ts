@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { JSONSchema7 } from 'json-schema';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,3 +37,34 @@ export interface UIControlElement extends UIAbstractElement {
   reference: string;
   options?: FieldOption[];
 }
+
+export type UIElementProps = Partial<
+  Record<
+    | 'width'
+    | 'maxWidth'
+    | 'minWidth'
+    | 'height'
+    | 'maxHeight'
+    | 'minHeight'
+    | 'sizeWidth'
+    | 'sizeHeight'
+    | 'boxSizing',
+    any
+  >
+> &
+  Partial<
+    Record<
+      | 'margin'
+      | 'marginTop'
+      | 'marginRight'
+      | 'marginBottom'
+      | 'marginLeft'
+      | 'padding'
+      | 'paddingTop'
+      | 'paddingRight'
+      | 'paddingBottom'
+      | 'paddingLeft',
+      any
+    >
+  > &
+  Partial<Record<'zIndex' | 'position' | 'top' | 'right' | 'bottom' | 'left', any>>;

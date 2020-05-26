@@ -5,8 +5,9 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useField } from 'formik';
 import { useDropzone, DropzoneOptions } from 'react-dropzone';
+import { UIElementProps } from '../../types';
 
-export interface UIFileFieldProps {
+export interface UIFileFieldProps extends UIElementProps {
   name: string;
   disabled: boolean;
   filesExtensions?: 'string';
@@ -33,10 +34,13 @@ export function UIFileField({ name, disabled, ...props }: UIFileFieldProps): JSX
   // eslint-disable-next-line @typescript-eslint/ban-types
   const [, , helpers] = useField<object>(name);
 
-  const label = props.label || null;
-  const size = props.size || 'small';
-  const color = props.color || 'primary';
-  const filesExtensions = props.filesExtensions || 'image/*';
+  const {
+    label = '',
+    size = 'small',
+    filesExtensions = 'image/*',
+    color = 'primary',
+    ...boxProps
+  } = props;
 
   const onDrop = useCallback(
     (files: File[]) => {
@@ -50,7 +54,7 @@ export function UIFileField({ name, disabled, ...props }: UIFileFieldProps): JSX
   const { getRootProps, getInputProps } = useDropzone(dropZoneOptions);
 
   return (
-    <Box p={1}>
+    <Box p={1} {...boxProps}>
       <div className={classes.uploadWrapper} {...getRootProps()}>
         <input {...getInputProps()} />
         {label && label !== '' ? (

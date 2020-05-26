@@ -1,8 +1,9 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import { UIElementProps } from '../../types';
 
-interface UITextProps {
+interface UITextProps extends UIElementProps {
   value: string;
   disabled: boolean;
   color?: 'primary' | 'secondary' | 'textPrimary' | 'textSecondary' | 'error';
@@ -22,11 +23,10 @@ interface UITextProps {
 }
 
 export function UIText({ value, disabled, ...props }: UITextProps): JSX.Element {
-  const color = props.color || 'primary';
-  const variant = props.variant || 'body1';
+  const { variant = 'body1', color = 'primary', ...boxProps } = props;
 
   return (
-    <Box p={1}>
+    <Box p={1} {...boxProps}>
       <Typography color={color} variant={variant}>
         {value}
       </Typography>

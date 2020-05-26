@@ -4,8 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import { SchemaContext } from '../../schema-context';
 import { isNumberProperty, isArrayProperty } from '../../helpers/schema-helpers';
+import { UIElementProps } from '../../types';
 
-export interface UITextFieldProps {
+export interface UITextFieldProps extends UIElementProps {
   name: string;
   disabled: boolean;
   label?: string;
@@ -22,12 +23,15 @@ export function UITextField({ name, disabled, ...props }: UITextFieldProps): JSX
 
   const { value, onBlur } = field;
 
-  const variant = props.variant || 'outlined';
-  const margin = props.margin || 'dense';
-  const fullWidth = props.fullWidth || false;
-  const label = props.label || '';
-  const placeholder = props.placeholder || '';
-  const size = props.size || 'small';
+  const {
+    label = '',
+    size = 'small',
+    variant = 'outlined',
+    placeholder = '',
+    fullWidth = false,
+    margin = 'dense',
+    ...boxProps
+  } = props;
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +55,7 @@ export function UITextField({ name, disabled, ...props }: UITextFieldProps): JSX
   }, [value, schema, name]);
 
   return (
-    <Box p={1}>
+    <Box p={1} {...boxProps}>
       <TextField
         name={name}
         value={inputValue}

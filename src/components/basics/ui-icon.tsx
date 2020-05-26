@@ -1,8 +1,9 @@
 import React from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Box from '@material-ui/core/Box';
+import { UIElementProps } from '../../types';
 
-interface UIIconProps {
+interface UIIconProps extends UIElementProps {
   value: string;
   disabled: boolean;
   color?: 'primary' | 'secondary' | 'action' | 'error' | 'disabled';
@@ -10,11 +11,10 @@ interface UIIconProps {
 }
 
 export function UIIcon({ value, disabled, ...props }: UIIconProps): JSX.Element {
-  const color = props.color || 'primary';
-  const fontSize = props.fontSize || 'small';
+  const { fontSize = 'small', color = 'primary', ...boxProps } = props;
 
   return (
-    <Box p={1}>
+    <Box p={1} {...boxProps}>
       <SvgIcon color={color} fontSize={fontSize}>
         <path d={value} />
       </SvgIcon>

@@ -4,8 +4,9 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 import Box from '@material-ui/core/Box';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import isValid from 'date-fns/isValid';
+import { UIElementProps } from '../../types';
 
-export interface UIDateTimeFieldProps {
+export interface UIDateTimeFieldProps extends UIElementProps {
   name: string;
   disabled: boolean;
   label?: string;
@@ -35,11 +36,14 @@ export function UIDateTimeField({ name, disabled, ...props }: UIDateTimeFieldPro
 
   const { value, onBlur } = field;
 
-  const label = props.label || '';
-  const variant = props.variant || 'inline';
-  const margin = props.margin || 'dense';
-  const inputVariant = props.inputVariant || 'outlined';
-  const format = props.format || 'dd/MM/yyyy';
+  const {
+    label = '',
+    variant = 'inline',
+    margin = 'dense',
+    inputVariant = 'outlined',
+    format = 'dd/MM/yyyy',
+    ...boxProps
+  } = props;
 
   const handleChange = useCallback(
     (date: Date | null, value) => {
@@ -65,7 +69,7 @@ export function UIDateTimeField({ name, disabled, ...props }: UIDateTimeFieldPro
   );
 
   return (
-    <Box p={1}>
+    <Box p={1} {...boxProps}>
       <KeyboardDatePicker
         disabled={disabled}
         className={classes.dateInput}
