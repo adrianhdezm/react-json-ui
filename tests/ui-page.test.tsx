@@ -14,6 +14,7 @@ describe('<UIPage />', () => {
       <UIPage data={data} schema={schema} uiSchema={uiSchema} onSubmit={onSubmit} />
     );
 
-    expect(wrapper.name()).toBe('Formik');
+    expect(wrapper.prop('initialValues')).toMatchObject(data);
+    expect(wrapper.prop('initialErrors')).toMatchObject({});
   });
 });
