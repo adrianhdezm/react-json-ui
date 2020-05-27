@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JSONSchema7 } from 'json-schema';
 
+export interface UiSchemaError {
+  message: string;
+  errors: Array<{ keyword: string; dataPath: string; schemaPath: string; message?: string }>;
+}
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Values = Record<string, any>;
 

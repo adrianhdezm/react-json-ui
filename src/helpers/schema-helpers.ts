@@ -2,12 +2,12 @@ import { JSONSchema7 } from 'json-schema';
 import { FormikErrors } from 'formik';
 import Ajv from 'ajv';
 import pointer from 'json-pointer';
-import { Values } from '../types';
+import { Values, UIElement, UiSchemaError } from '../types';
+import { uiSchemata } from '../ui-schemata';
 
 const ajv = new Ajv({ allErrors: true, jsonPointers: true });
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const isValueValid = (value: object, schema: JSONSchema7): boolean => {
+export const isValueValid = (value: Values, schema: JSONSchema7): boolean => {
   ajv.validate(value, schema);
   return Array.isArray(ajv.errors);
 };
@@ -22,7 +22,9 @@ export const validateValues = (values: Values, schema: JSONSchema7): FormikError
   }
   return errors.reduce((formikErrors, currentError) => {
     const { dataPath, message } = currentError;
-    pointer.set(formikErrors, dataPath, message);
+    if (dataPath && dataPath !== '') {
+      pointer.set(formikErrors, dataPath, message);
+    }
     return formikErrors;
   }, {});
 };
@@ -53,3 +55,12 @@ export const isArrayProperty = (schema: JSONSchema7, name: string): boolean => {
   const property = pointer.get(schema, `/properties/${name}`);
   return property.type === 'array';
 };
+
+export function validateUiSchema(uiSchema: UIElement): UiSchemaError | null {
+  ajv.validate(uiSchemata as JSONSchema7, uiSchema);
+  const errors = ajv.errors;
+  if (!Array.isArray(errors)) {
+    return null;
+  }
+  return { message: 'invalid UI Schema', errors };
+}

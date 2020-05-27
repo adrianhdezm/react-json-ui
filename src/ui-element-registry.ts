@@ -39,3 +39,7 @@ export const UIElementRegistry: Record<string, React.FC<any>> = {
   ...UIBasicRegistry,
   ...UIContainerRegistry
 };
+
+export const UIBasicElementNames = Object.keys(UIBasicRegistry);
+export const UIContainerElementNames = Object.keys(UIContainerRegistry);
+export const UIControlElementNames = Object.keys(UIControlRegistry);

@@ -3,8 +3,8 @@ import { Formik, FormikHelpers, FormikProps } from 'formik';
 import { JSONSchema7 } from 'json-schema';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { Values, UIElement } from '../types';
-import { validateValues } from '../helpers/schema-helpers';
+import { Values, UIElement, UiSchemaError } from '../types';
+import { validateValues, validateUiSchema } from '../helpers/schema-helpers';
 import { SchemaContext } from '../schema-context';
 import { UIFactory } from './ui-factory';
 
@@ -14,9 +14,25 @@ interface UIPageProps {
   uiSchema: UIElement;
   onSubmit: (values: Values, formikHelpers: FormikHelpers<Values>) => void;
   onReset?: (values: Values, formikHelpers: FormikHelpers<Values>) => void;
+  onUiSchemaErrors?: (error: UiSchemaError) => void;
 }
 
-export function UIPage({ data, schema, uiSchema, onSubmit, onReset }: UIPageProps): JSX.Element {
+export function UIPage({
+  data,
+  schema,
+  uiSchema,
+  onSubmit,
+  onReset,
+  onUiSchemaErrors
+}: UIPageProps): JSX.Element | null {
+  const uiSchemaError = useMemo<UiSchemaError | null>(() => {
+    const error = validateUiSchema(uiSchema);
+    if (error && onUiSchemaErrors) {
+      onUiSchemaErrors(error);
+    }
+    return error;
+  }, [uiSchema, onUiSchemaErrors]);
+
   const initialErrors = useMemo(() => {
     return validateValues(data, schema);
   }, [data, schema]);
@@ -47,7 +63,7 @@ export function UIPage({ data, schema, uiSchema, onSubmit, onReset }: UIPageProp
     [uiSchema, schema, handleKeyDown]
   );
 
-  return (
+  return uiSchemaError ? null : (
     <Formik
       initialValues={data}
       initialErrors={initialErrors}
