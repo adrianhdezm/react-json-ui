@@ -15,7 +15,7 @@ module.exports = {
   parserOptions: {
     project: path.resolve(__dirname, './tsconfig.eslint.json'),
     tsconfigRootDir: __dirname,
-    ecmaVersion: 2019, // Allows for the parsing of modern ECMAScript features
+    ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
     sourceType: 'module' // Allows for the use of imports
   },
   settings: {
@@ -25,7 +25,6 @@ module.exports = {
   },
   ignorePatterns: ['dist/**/*', 'jest.config.js'],
   rules: {
-    'no-console': 'off',
     'prettier/prettier': 'error',
     // TypeScript's `noFallthroughCasesInSwitch` option is more robust (#6906)
     'default-case': 'off',

@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "target": "es5",
+    "outDir": "lib",
     "module": "esnext",
     "lib": ["dom", "esnext"],
     "importHelpers": true,
@@ -12,8 +14,15 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "jsx": "react",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "strictPropertyInitialization": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "lib"]
 }

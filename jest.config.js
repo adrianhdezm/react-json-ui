@@ -1,4 +1,6 @@
+/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
   rootDir: 'tests',
-  setupFilesAfterEnv: ['<rootDir>/config/setup-files.ts']
+  testEnvironment: 'jsdom',
+  preset: 'ts-jest'
 };
