@@ -1,8 +1,8 @@
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
-import replace from 'rollup-plugin-replace';
 import pkg from './package.json';
 
 const commonPlugins = [
